@@ -36,15 +36,21 @@ class App extends React.Component {
       <div className="App">
         <h1>Team Creator App</h1>
         <TeamList players={this.state.players} />
-        <form action="">
+        <form action="" onSubmit={this.submitNewPlayer}>
           New Player Form
           <label htmlFor="">
             Player Name
-            <input type="text" onChange={this.addNewPlayer} />
+            <input type="text" onChange={this.addNewPlayer} name="name" />
           </label>
           <label htmlFor="">
             Player Number
-            <input type="number" />
+            <input
+              type="number"
+              min="1"
+              max="11"
+              onChange={this.addNewPlayer}
+              name="number"
+            />
           </label>
           <button>Submit</button>
         </form>
@@ -52,9 +58,27 @@ class App extends React.Component {
     );
   }
   addNewPlayer = event => {
-    const { value } = event.target;
-    console.log(value);
-    this.setState({ newPlayer: { name: value } });
+    const { value, name } = event.target;
+    console.log(name, value);
+    // this.setState({ newPlayer: { [name]: value } });
+    this.setState(currentState => {
+      return { newPlayer: { ...currentState.newPlayer, [name]: value } };
+    });
+  };
+
+  submitNewPlayer = event => {
+    event.preventDefault();
+    console.log("newPlayer", this.state.newPlayer);
+    console.log("players: ", this.state.players);
+    this.setState(currentState => {
+      currentState.players.filter(player => {
+        console.log(
+          "player number:",
+          player.number,
+          currentState.newPlayer.number
+        );
+      });
+    });
   };
 }
 
