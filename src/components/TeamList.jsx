@@ -11,6 +11,13 @@ export default function TeamList(props) {
             <li key={player.number}>
               {" "}
               <PlayerCard player={player} />{" "}
+              <button
+                onClick={() => {
+                  props.makeStarPlayer(player.name);
+                }}
+              >
+                Make me Star player of the week
+              </button>
             </li>
           );
         })}

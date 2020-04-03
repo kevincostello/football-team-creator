@@ -21,7 +21,8 @@ class App extends React.Component {
         preferredPosition: "Forward"
       },
       { name: "", number: 11 }
-    ]
+    ],
+    starPlayer: "Fred"
   };
 
   render() {
@@ -29,22 +30,31 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>Team Creator App</h1>
-        <TeamList players={this.state.players} />
+        <p>Star Player: {this.state.starPlayer}</p>
+        <TeamList
+          players={this.state.players}
+          makeStarPlayer={this.makeStarPlayer}
+        />
         <PlayerAdder addNewPlayer={this.addNewPlayer} />
       </div>
     );
   }
+
   addNewPlayer = newPlayer => {
     console.log("newPlayer: ", newPlayer);
     this.setState(currentState => {
       const updatedPlayers = currentState.players.map(player => {
         if (player.number === newPlayer.number) {
-          player = currentState.newPlayer;
+          player = newPlayer;
         }
         return player;
       });
       return { players: updatedPlayers };
     });
+  };
+
+  makeStarPlayer = selectedPlayer => {
+    this.setState({ starPlayer: selectedPlayer });
   };
 }
 
