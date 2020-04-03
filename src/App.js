@@ -25,6 +25,16 @@ class App extends React.Component {
     starPlayer: "Fred"
   };
 
+  componentDidMount() {
+    console.log("mounted");
+    const playersJSON = localStorage.getItem("players");
+    const starplayerJSON = localStorage.getItem("starPlayer");
+    if (localStorage.players) {
+      const players = JSON.parse(playersJSON);
+      const starPlayer = JSON.parse(starplayerJSON);
+      this.setState({ players, starPlayer });
+    }
+  }
   render() {
     console.log(this.state.players);
     return (
@@ -35,6 +45,7 @@ class App extends React.Component {
           players={this.state.players}
           makeStarPlayer={this.makeStarPlayer}
         />
+        <button onClick={this.saveCurrentTeam}>Save current team</button>
         <PlayerAdder addNewPlayer={this.addNewPlayer} />
       </div>
     );
@@ -55,6 +66,12 @@ class App extends React.Component {
 
   makeStarPlayer = selectedPlayer => {
     this.setState({ starPlayer: selectedPlayer });
+  };
+
+  saveCurrentTeam = event => {
+    console.log("saved");
+    localStorage.setItem("players", JSON.stringify(this.state.players));
+    localStorage.setItem("starPlayer", JSON.stringify(this.state.starPlayer));
   };
 }
 

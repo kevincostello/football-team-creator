@@ -15,7 +15,12 @@ export class PlayerAdder extends Component {
         <h2>Add new player:</h2>
         <label htmlFor="">
           Player Name
-          <input type="text" onChange={this.handleChange} name="name" />
+          <input
+            type="text"
+            onChange={this.handleChange}
+            name="name"
+            value={this.state.newPlayer.name}
+          />
         </label>
         <label htmlFor="">
           Player Number
@@ -25,6 +30,7 @@ export class PlayerAdder extends Component {
             max="11"
             onChange={this.handleChange}
             name="number"
+            value={this.state.newPlayer.number}
           />
         </label>
         <button>Submit</button>
@@ -44,6 +50,14 @@ export class PlayerAdder extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.props.addNewPlayer(this.state.newPlayer);
+    this.setState({
+      newPlayer: {
+        name: "",
+        number: "",
+        age: "",
+        preferredPosition: ""
+      }
+    });
   };
 }
 
